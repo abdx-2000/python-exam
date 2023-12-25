@@ -1,0 +1,62 @@
+import pandas as pd
+import numpy as np
+
+class DataPrepKit:
+    def __init__(self, file_path):
+        self.df = pd.read_excel(file_path)
+
+    def read_data(self):
+        return self.df
+
+    def generate_data_summary(self):
+        summary = {
+            "mean": self.df.mean(),
+            "most_frequent": self.df.mode().iloc[0]
+        }
+        return summary
+
+    def handle_missing_values(self, strategy='remove'):
+        if strategy == 'remove':
+            self.df.dropna(inplace=True)
+        elif strategy == 'impute':
+            # You can implement imputation logic based on your strategy
+            pass
+        else:
+            raise ValueError("Invalid strategy. Choose 'remove' or 'impute'.")
+
+    def encode_categorical_data(self):
+        # You can implement categorical encoding logic using pandas
+        # For simplicity, let's assume all columns are numeric
+        self.df = self.df.apply(lambda col: pd.to_numeric(col, errors='coerce'))
+
+    def deploy_to_pypi(self):
+        # You can implement package deployment logic to PyPI
+        # For simplicity, let's assume it's a placeholder
+        print("Deploying to PyPI...")
+
+# Example Usage:
+file_path = r'C:\Users\abdul\Desktop\python file\ldc2017_StatTables.xlsx'
+data_prep = DataPrepKit(file_path)
+
+# 1. Read Data
+data = data_prep.read_data()
+print("Data:")
+print(data.head())
+
+# 2. Data Summary
+summary = data_prep.generate_data_summary()
+print("\nData Summary:")
+print(summary)
+
+# 3. Handling Missing Values (Remove in this example)
+data_prep.handle_missing_values(strategy='remove')
+print("\nData after handling missing values:")
+print(data_prep.read_data().head())
+
+# 4. Categorical Data Encoding
+data_prep.encode_categorical_data()
+print("\nData after encoding categorical data:")
+print(data_prep.read_data().head())
+
+# 5. Package Deployment (Placeholder)
+data_prep.deploy_to_pypi()
